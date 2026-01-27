@@ -1,4 +1,5 @@
 # NetCoreAPI
+* BUỔI HỌC SỐ 3
 1.CẤU TRÚC THƯ MỤC .NET MVC
     Gồm:
         + Tên project VD: MVCMOVIE
@@ -37,4 +38,23 @@
         - Có phần mở rộng là “.cshtml”
         - Nằm trong thư mục Views/Controler_Name (tương ứng với  - -    HelloWorldController sẽ có thư mục HelloWorld trong thư mục Views)
         - Nhiệm vụ của View: Cung cấp giao diện người dùng (HTML) bằng C#
+* BUỔI HỌC SỐ 4
+    1. VIEWBAG TRONG MVC:
+    - Viewbag sử dụng để truyền tiêu đề, thông báo, dữ liệu đơn giản
+    2. VD sử dụng Viewbag để gửi dữ liệu từ Controller về View
+    Controller
+        public IActionResult Index()
+        { ViewBag.Title = "Trang chủ";
+          ViewBag.UserName = "Hoàng Hiếu";
+          ViewBag.Age = 20;
+          return View();
+        }
+    View
+        <h2>@ViewBag.Title</h2>
+        <p>Tên người dùng: @ViewBag.UserName</p>
+        <p>Tuổi: @ViewBag.Age</p>
+
+    3. Gửi nhận dữ liệu giữa View và Controller thông qua Submit form
+    4. VD
+    
 
