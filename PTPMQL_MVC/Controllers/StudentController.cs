@@ -1,7 +1,7 @@
 namespace PTPMQL_MVC.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using PTPMQL_MVC.Entities;
+using PTPMQL_MVC.Models.Entities;
 
 public class StudentController : Controller
 {
