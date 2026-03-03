@@ -7,9 +7,10 @@ namespace PTPMQL_MVC.Models.Entities
     public class Person
     {
         [Key]
-        public string PersonID { get; set;} =default!;
+        public string PersonId { get; set;} =default!;
         public string FullName  { get; set;} =default!;
         public string Address { get; set;} =default!;
+        public string Age {get; set;} =default!;
 
     }
 }
