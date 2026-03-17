@@ -26,7 +26,7 @@ namespace PTPMQL_MVC.Controllers
         }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("PersonId,FullName,Address,Age")] Person person)
+    public async Task<IActionResult> Create([Bind("PersonId,FullName,Address,Age,Email")] Person person)
         {
             if(ModelState.IsValid)
             {
@@ -40,22 +40,22 @@ namespace PTPMQL_MVC.Controllers
         {
             if (id == null || _context.Person == null)
             {
-                return NotFound();
+                return View("NotFound");
             }
             var person = await _context.Person.FindAsync(id);
             if (person == null)
             {
-                return NotFound();
+                return View("NotFound");
             }
             return View(person);
         }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(string id, [Bind("PersonId,FullName,Address,Age")] Person person)
+    public async Task<IActionResult> Edit(string id, [Bind("PersonId,FullName,Address,Age,Email")] Person person)
     {
             if (id != person.PersonId)
             {
-                return NotFound();
+                return View("NotFound");
             }
 
             if (ModelState.IsValid)
@@ -69,7 +69,7 @@ namespace PTPMQL_MVC.Controllers
                 {
                     if (!PersonExists(person.PersonId))
                     {
-                        return NotFound();
+                        return View("NotFound");
                     }
                     else
                     {
@@ -84,13 +84,13 @@ namespace PTPMQL_MVC.Controllers
         {
             if (id == null || _context.Person == null)
             {
-                return NotFound();
+                return View("NotFound");
             }
 
             var person = await _context.Person.FirstOrDefaultAsync(m => m.PersonId == id);
             if (person == null)
             {
-                return NotFound();
+                return View("NotFound");
             }
 
             return View(person);
