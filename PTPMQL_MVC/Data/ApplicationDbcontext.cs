@@ -13,5 +13,8 @@ namespace PTPMQL_MVC.Data
         public DbSet<Person> Person { get; set; }
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Faculty> Faculties { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-@model PTPMQL_MVC.Models.Entities.Product
+@model PTPMQL_MVC.Models.Entities.Faculty
 
 @{
     ViewData["Title"] = "Create";
@@ -6,16 +6,21 @@
 
 <h1>Create</h1>
 
-<h4>Product</h4>
+<h4>Faculty</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
-                <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
+                <label asp-for="FacultyId" class="control-label"></label>
+                <input asp-for="FacultyId" class="form-control" />
+                <span asp-validation-for="FacultyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FacultyName" class="control-label"></label>
+                <input asp-for="FacultyName" class="form-control" />
+                <span asp-validation-for="FacultyName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

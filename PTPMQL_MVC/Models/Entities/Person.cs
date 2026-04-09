@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.Text;
 namespace PTPMQL_MVC.Models.Entities
 {
-    [Table("Persons")]
     public class Person
     {
         [Key]
@@ -20,5 +19,9 @@ namespace PTPMQL_MVC.Models.Entities
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         [Required(ErrorMessage = "Email không được để trống")]
         public string Email {get; set; } = null!;
+        public string FacultyId { get; set; } = default!;
+        [ForeignKey("FacultyId")]
+        public virtual Faculty? Faculty { get; set; } = default!;
     }
+
 }
