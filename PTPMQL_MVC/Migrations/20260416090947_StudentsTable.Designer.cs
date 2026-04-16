@@ -10,8 +10,8 @@ using PTPMQL_MVC.Data;
 namespace PTPMQL_MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260409091511_CreateFacultyTable")]
-    partial class CreateFacultyTable
+    [Migration("20260416090947_StudentsTable")]
+    partial class StudentsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,10 +50,6 @@ namespace PTPMQL_MVC.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FacultyId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -61,24 +57,7 @@ namespace PTPMQL_MVC.Migrations
 
                     b.HasKey("PersonId");
 
-                    b.HasIndex("FacultyId");
-
                     b.ToTable("Person");
-                });
-
-            modelBuilder.Entity("PTPMQL_MVC.Models.Entities.Product", b =>
-                {
-                    b.Property<int>("ProductID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ProductID");
-
-                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("PTPMQL_MVC.Models.Entities.Student", b =>
@@ -99,17 +78,6 @@ namespace PTPMQL_MVC.Migrations
                     b.HasIndex("FacultyId");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("PTPMQL_MVC.Models.Entities.Person", b =>
-                {
-                    b.HasOne("PTPMQL_MVC.Models.Entities.Faculty", "Faculty")
-                        .WithMany()
-                        .HasForeignKey("FacultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Faculty");
                 });
 
             modelBuilder.Entity("PTPMQL_MVC.Models.Entities.Student", b =>

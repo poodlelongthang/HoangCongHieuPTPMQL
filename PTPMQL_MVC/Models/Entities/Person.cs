@@ -19,9 +19,7 @@ namespace PTPMQL_MVC.Models.Entities
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         [Required(ErrorMessage = "Email không được để trống")]
         public string Email {get; set; } = null!;
-        public string FacultyId { get; set; } = default!;
-        [ForeignKey("FacultyId")]
-        public virtual Faculty? Faculty { get; set; } = default!;
+        
     }
 
 }
