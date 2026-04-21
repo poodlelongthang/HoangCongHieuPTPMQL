@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Import Excel";
+}
+
+<h2>Import danh sách sinh viên từ Excel</h2>
+
+<div style="margin-top:20px; padding:20px; border:1px solid #ccc; width:400px; border-radius:10px;">
+    
+    <form asp-action="ImportExcel" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div style="margin-bottom:10px;">
+            <label>Chọn file Excel (.xlsx)</label><br />
+            <input type="file" name="file" accept=".xlsx" />
+        </div>
+
+        <button type="submit" style="padding:8px 16px; background-color:#4CAF50; color:white; border:none; border-radius:5px;">
+            Upload
+        </button>
+    </form>
+
+</div>
+
+<!-- Hiển thị lỗi -->
+@if (!ViewData.ModelState.IsValid)
+{
+    <div style="color:red; margin-top:15px;">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<!-- Hiển thị hướng dẫn -->
+<div style="margin-top:20px;">
+    <h4>📌 Định dạng file Excel:</h4>
+    <ul>
+        <li>Cột 1: StudentCode</li>
+        <li>Cột 2: FullName</li>
+        <li>Cột 3: FacultyId</li>
+    </ul>
+</div>

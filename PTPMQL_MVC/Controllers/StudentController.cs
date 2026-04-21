@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PTPMQL_MVC.Data;
 using PTPMQL_MVC.Models.Entities;
 using PTPMQL_MVC.Models.ViewModels;
+using ClosedXML.Excel;
 namespace PTPMQL_MVC.Controllers
 {
     public class StudentController : Controller
@@ -31,6 +32,10 @@ namespace PTPMQL_MVC.Controllers
                             })
                             .ToListAsync();
             return View(result);
+        }
+        public IActionResult Import()
+        {
+            return View();
         }
 
         // GET: Student/Details/5
@@ -166,6 +171,67 @@ namespace PTPMQL_MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                ModelState.AddModelError("", "File không hợp lệ");
+                return View("Import");
+            }
+
+            if (!file.FileName.EndsWith(".xlsx"))
+            {
+                ModelState.AddModelError("", "Chỉ chấp nhận file .xlsx");
+                return View("Import");
+            }
+
+            var students = new List<Student>();
+
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+
+                using (var workbook = new XLWorkbook(stream))
+                {
+                    var worksheet = workbook.Worksheet(1);
+                    var rows = worksheet.RangeUsed().RowsUsed().Skip(1); // bỏ header
+
+                    foreach (var row in rows)
+                    {
+                        string studentCode = row.Cell(1).GetValue<string>().Trim();
+                        string fullName = row.Cell(2).GetValue<string>().Trim();
+                        string facultyId = row.Cell(3).GetValue<string>().Trim();
+
+                        if (string.IsNullOrEmpty(studentCode) || studentCode.Length < 6)
+                            continue;
+
+                        if (string.IsNullOrEmpty(fullName))
+                            continue;
+
+                        if (!_context.Faculties.Any(f => f.FacultyId == facultyId))
+                            continue;
+
+                        if (StudentExists(studentCode))
+                            continue;
+
+                        students.Add(new Student
+                        {
+                            StudentCode = studentCode,
+                            FullName = fullName,
+                            FacultyId = facultyId
+                        });
+                    }
+                }
+            }
+
+            _context.Students.AddRange(students);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"Import thành công {students.Count} sinh viên!";
+            return RedirectToAction(nameof(Index));
+        }
         private bool StudentExists(string id)
         {
             return _context.Students.Any(e => e.StudentCode == id);
